@@ -90,4 +90,7 @@ public class ConsoleOutput {
     public void showHiddenWord(){
         System.out.println("Загаданное слово " + word.toUpperCase());
     }
+    public void showFoundedWord(String foundedWord){
+        System.out.println(foundedWord.toUpperCase());
+    }
 }

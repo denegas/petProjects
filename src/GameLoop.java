@@ -13,23 +13,23 @@ public class GameLoop {
         boolean win = false;
         int tries = 0;
 
-        System.out.println("Загаданное слово состоит из " + hiddenWord.length() + " букв");
+        consoleOutput.HiddenWordLength();
         do {
-            System.out.println("Введите букву");
+            consoleOutput.writeLetter();
             String nowTry = scanner.nextLine().toLowerCase();
 
-            if (nowTry.length() != 1 || !RUSSIAN_ALPHABET.contains(nowTry)) {
-                System.out.println("Введите 1 букву из кириллицы!");
+            if (validateLetter(nowTry)) {
+                consoleOutput.errorAlphabet();
                 continue;
             } else if (usedSymbols.contains(nowTry.charAt(0))) {
-                System.out.println("вы уже использовали букву: " + nowTry.toUpperCase());
+                consoleOutput.alreadyUseThisLetter(nowTry);
                 continue;
             }
             addFoundedIndexes(hiddenWord,nowTry,foundedIndexes);
             String foundedWord = generateGuessedWord(hiddenWord, foundedIndexes);
 
             if (foundedWord.equals(hiddenWord)) {
-                System.out.println("Вы угадали слово: " + hiddenWord.toUpperCase());
+               consoleOutput.successfulGuess();
                 win = true;
                 break;
             }
@@ -39,11 +39,11 @@ public class GameLoop {
             }
             usedSymbols.add(nowTry.charAt(0));
 
-            System.out.println(foundedWord.toUpperCase());
-            System.out.println("\nОсталось попыток: " + (6 - tries));
+           consoleOutput.showFoundedWord(foundedWord);
+           consoleOutput.availableTries(tries);
 
         } while (tries < 6);
-        if (!win) System.out.println("Загаданное слово " + hiddenWord.toUpperCase());
+        if (!win) consoleOutput.showHiddenWord();
 
     }
 
@@ -65,5 +65,8 @@ public class GameLoop {
                     foundedIndexes.add(i);
                 }
             }
+    }
+    public static boolean validateLetter(String nowTry){
+        return nowTry.length() != 1 || !RUSSIAN_ALPHABET.contains(nowTry);
     }
 }
