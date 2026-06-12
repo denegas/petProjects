@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ public class Main {
         boolean again = false;
         Scanner scanner = new Scanner(System.in);
         String firstInput;
-        ConsoleOutput.newGameQuestion();
+        ConsoleWriter.newGameQuestion();
         try {
             firstInput = scanner.nextLine();
         } catch (RuntimeException e) {
@@ -18,7 +17,7 @@ public class Main {
         if (firstInput.equalsIgnoreCase(ANSWER_TO_START_GAME)) {
             do {
                 GameLoop.start(scanner);
-                ConsoleOutput.playAgainQuestion();
+                ConsoleWriter.playAgainQuestion();
 
                 try {
                     String input = scanner.nextLine();
@@ -29,7 +28,7 @@ public class Main {
 
             } while (again);
         }
-        ConsoleOutput.gameOverMessage();
+        ConsoleWriter.gameOverMessage();
         scanner.close();
 
     }

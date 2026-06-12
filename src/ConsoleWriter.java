@@ -1,11 +1,6 @@
-public class ConsoleOutput {
-    private String word;
+public final class ConsoleWriter {
 
-    public ConsoleOutput(String word) {
-        this.word = word;
-    }
-
-    public void drawStickMan(int triesCount) {
+    public static void drawGallows(int triesCount) {
         switch (triesCount) {
             case 0:
                 System.out.println(
@@ -72,35 +67,35 @@ public class ConsoleOutput {
         }
     }
 
-    public void HiddenWordLength() {
+    public static void hiddenWordLength(String word) {
         System.out.println("Загаданное слово состоит из " + word.length() + " букв");
     }
 
-    public void writeLetter() {
+    public static void writeLetter() {
         System.out.println("Введите букву");
     }
 
-    public void errorAlphabet() {
+    public static void errorAlphabet() {
         System.out.println("Введите 1 букву из кириллицы!");
     }
 
-    public void alreadyUseThisLetter(String letter) {
+    public static void alreadyUseThisLetter(String letter) {
         System.out.println("вы уже использовали букву: " + letter.toUpperCase());
     }
 
-    public void successfulGuess() {
+    public static void successfulGuess(String word) {
         System.out.println("Вы угадали слово: " + word.toUpperCase());
     }
 
-    public void availableTries(int tries) {
+    public static void availableTries(int tries) {
         System.out.println("\nОсталось попыток: " + (6 - tries));
     }
 
-    public void showHiddenWord() {
+    public static void showHiddenWord(String word) {
         System.out.println("Загаданное слово " + word.toUpperCase());
     }
 
-    public void showFoundedWord(String foundedWord) {
+    public static void showFoundedWord(String foundedWord) {
         System.out.println(foundedWord.toUpperCase());
     }
     public static void newGameQuestion(){

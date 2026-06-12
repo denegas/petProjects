@@ -8,43 +8,42 @@ public class GameLoop {
 
     public static void start(Scanner scanner) {
         String hiddenWord = allWords.get(random.nextInt(allWords.size()));
-        ConsoleOutput consoleOutput = new ConsoleOutput(hiddenWord);
         Set<Character> usedSymbols = new HashSet<>();
         List<Integer> foundedIndexes = new ArrayList<>();
         boolean win = false;
         int tries = 0;
 
-        consoleOutput.HiddenWordLength();
+        ConsoleWriter.hiddenWordLength(hiddenWord);
         do {
-            consoleOutput.writeLetter();
+            ConsoleWriter.writeLetter();
             String nowTry = scanner.nextLine().toLowerCase();
 
             if (validateLetter(nowTry)) {
-                consoleOutput.errorAlphabet();
+                ConsoleWriter.errorAlphabet();
                 continue;
             } else if (usedSymbols.contains(nowTry.charAt(0))) {
-                consoleOutput.alreadyUseThisLetter(nowTry);
+                ConsoleWriter.alreadyUseThisLetter(nowTry);
                 continue;
             }
             addFoundedIndexes(hiddenWord, nowTry, foundedIndexes);
             String foundedWord = generateGuessedWord(hiddenWord, foundedIndexes);
 
             if (foundedWord.equals(hiddenWord)) {
-                consoleOutput.successfulGuess();
+                ConsoleWriter.successfulGuess(hiddenWord);
                 win = true;
                 break;
             }
             if (!hiddenWord.contains(nowTry)) {
-                consoleOutput.drawStickMan(tries);
+                ConsoleWriter.drawGallows(tries);
                 tries++;
             }
             usedSymbols.add(nowTry.charAt(0));
 
-            consoleOutput.showFoundedWord(foundedWord);
-            consoleOutput.availableTries(tries);
+            ConsoleWriter.showFoundedWord(foundedWord);
+            ConsoleWriter.availableTries(tries);
 
         } while (tries < 6);
-        if (!win) consoleOutput.showHiddenWord();
+        if (!win) ConsoleWriter.showHiddenWord(hiddenWord);
 
     }
 
