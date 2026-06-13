@@ -11,8 +11,7 @@ public class GameLoop {
     public static void start(Scanner scanner) {
         String hiddenWord = allWords.get(random.nextInt(allWords.size()));
         Set<Character> usedLetters = new HashSet<>();
-        List<Integer> foundedIndexes = new ArrayList<>();
-        List<Character> foundedLetters = new ArrayList<>();
+        Set<Character> foundedLetters = new HashSet<>();
         boolean win = false;
         int tries = 0;
         char letter;
@@ -31,8 +30,8 @@ public class GameLoop {
                 ConsoleWriter.alreadyUsedThisLetter(letter);
                 continue;
             }
-            addFoundedIndexes(hiddenWord, letter, foundedIndexes);
-            String foundedWord = generateFoundedLettersInWord(hiddenWord, foundedIndexes);
+            addRightLetters(hiddenWord, letter, foundedLetters);
+            String foundedWord = generateRightLettersInWord(hiddenWord, foundedLetters);
 
             if (foundedWord.equals(hiddenWord)) {
                 ConsoleWriter.successfulGuess(hiddenWord);
@@ -55,10 +54,10 @@ public class GameLoop {
     }
 
 
-    private static String generateFoundedLettersInWord(String word, List<Integer> foundedIndexes) {
+    private static String generateRightLettersInWord(String word, Set<Character> foundedLetters) {
         StringBuilder foundedWord = new StringBuilder();
         for (int i = 0; i < word.length(); i++) {
-            if (foundedIndexes.contains(i)) {
+            if (foundedLetters.contains(word.charAt(i))) {
                 foundedWord.append(word.charAt(i));
             } else {
                 foundedWord.append("*");
@@ -67,14 +66,13 @@ public class GameLoop {
         return foundedWord.toString();
     }
 
-    private static void addFoundedIndexes(String hiddenWord, char letter, List<Integer> foundedIndexes) {
+    private static void addRightLetters(String hiddenWord, char letter, Set<Character> foundedLetters) {
         for (int i = 0; i < hiddenWord.length(); i++) {
             if (hiddenWord.charAt(i) == letter) {
-                foundedIndexes.add(i);
+                foundedLetters.add(letter);
             }
         }
     }
-
 
     public static boolean isValidInput(String input) {
         return input.trim().length() == 1 && RUSSIAN_ALPHABET_PATTERN.matcher(input.trim()).matches();
