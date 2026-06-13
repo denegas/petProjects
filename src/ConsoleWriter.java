@@ -1,72 +1,16 @@
 import java.util.Set;
 
 public final class ConsoleWriter {
-
+ private static final String[] gallowsStages = {
+         "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+         "  +---+\n  |   |\n  0   |\n      |\n      |\n      |\n=========",
+         "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+         "  +---+\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========",
+         "  +---+\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========",
+         "  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n========="
+ };
     public static void drawGallows(int triesCount) {
-        switch (triesCount) {
-            case 0:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            case 1:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "  0   |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            case 2:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "  O   |\n" +
-                                " /|   |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            case 3:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "  O   |\n" +
-                                " /|\\  |\n" +
-                                "      |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            case 4:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "  O   |\n" +
-                                " /|\\  |\n" +
-                                " /    |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            case 5:
-                System.out.println(
-                        "  +---+\n" +
-                                "  |   |\n" +
-                                "  O   |\n" +
-                                " /|\\  |\n" +
-                                " / \\  |\n" +
-                                "      |\n" +
-                                "=========");
-                break;
-            default:
-                System.out.println("Error with count");
-        }
+        System.out.println(gallowsStages[triesCount]);
     }
 
     public static void hiddenWordLength(String word) {
