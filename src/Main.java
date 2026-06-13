@@ -6,30 +6,25 @@ public class Main {
 
     public static void main() {
         boolean again = false;
-        Scanner scanner = new Scanner(System.in);
         String firstInput;
         ConsoleWriter.newGameQuestion();
-        try {
-            firstInput = scanner.nextLine();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Failed to read user answer", e);
-        }
-        if (firstInput.equalsIgnoreCase(ANSWER_TO_START_GAME)) {
-            do {
-                GameLoop.start(scanner);
-                ConsoleWriter.playAgainQuestion();
 
-                try {
+        try (Scanner scanner = new Scanner(System.in)) {
+            firstInput = scanner.nextLine();
+
+            if (firstInput.equalsIgnoreCase(ANSWER_TO_START_GAME)) {
+                do {
+                    GameLoop.start(scanner);
+                    ConsoleWriter.playAgainQuestion();
                     String input = scanner.nextLine();
                     again = input.equalsIgnoreCase(ANSWER_TO_START_GAME);
-                } catch (NoSuchElementException err) {
-                    System.out.println("err with: " + err.getMessage());
-                }
 
-            } while (again);
+                } while (again);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to read user answer: ", e);
         }
         ConsoleWriter.gameOverMessage();
-        scanner.close();
 
     }
 }
