@@ -1,3 +1,5 @@
+import java.util.Set;
+
 public final class ConsoleWriter {
 
     public static void drawGallows(int triesCount) {
@@ -79,7 +81,7 @@ public final class ConsoleWriter {
         System.out.println("Введите 1 букву из кириллицы!");
     }
 
-    public static void alreadyUseThisLetter(String letter) {
+    public static void alreadyUsedThisLetter(String letter) {
         System.out.println("вы уже использовали букву: " + letter.toUpperCase());
     }
 
@@ -87,8 +89,8 @@ public final class ConsoleWriter {
         System.out.println("Вы угадали слово: " + word.toUpperCase());
     }
 
-    public static void availableTries(int tries) {
-        System.out.println("\nОсталось попыток: " + (6 - tries));
+    public static void availableTries(int tries, int MAX_TRIES) {
+        System.out.println("Осталось попыток: " + (MAX_TRIES - tries) + "\n");
     }
 
     public static void showHiddenWord(String word) {
@@ -98,13 +100,20 @@ public final class ConsoleWriter {
     public static void showFoundedWord(String foundedWord) {
         System.out.println(foundedWord.toUpperCase());
     }
-    public static void newGameQuestion(){
+
+    public static void newGameQuestion() {
         System.out.println("Начать новую игру? (Y/N)");
     }
-    public static void playAgainQuestion(){
+
+    public static void playAgainQuestion() {
         System.out.println("Сыграть снова? (Y/N)");
     }
-    public static void gameOverMessage(){
+
+    public static void gameOverMessage() {
         System.out.println("Конец игры");
+    }
+
+    public static void showUsedLetters(Set<Character> set) {
+        System.out.println("Использованные буквы: " + set.toString().replaceAll("([\\[\\]])", " ").toUpperCase());
     }
 }
