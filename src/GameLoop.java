@@ -12,18 +12,24 @@ public class GameLoop {
         String hiddenWord = allWords.get(random.nextInt(allWords.size()));
         Set<Character> usedLetters = new HashSet<>();
         List<Integer> foundedIndexes = new ArrayList<>();
+        List<Character> foundedLetters = new ArrayList<>();
         boolean win = false;
         int tries = 0;
-
+        char letter;
         ConsoleWriter.hiddenWordLength(hiddenWord);
         do {
             ConsoleWriter.writeLetter();
-            String letter = scanner.nextLine().toLowerCase();
 
+            try {
+                letter = scanner.nextLine().toLowerCase().charAt(0);
+            } catch (RuntimeException e){
+                ConsoleWriter.errorAlphabet();
+                continue;
+            }
             if (!isValidLetter(letter)) {
                 ConsoleWriter.errorAlphabet();
                 continue;
-            } else if (usedLetters.contains(letter.charAt(0))) {
+            } else if (usedLetters.contains(letter)) {
                 ConsoleWriter.alreadyUsedThisLetter(letter);
                 continue;
             }
@@ -35,13 +41,12 @@ public class GameLoop {
                 win = true;
                 break;
             }
-            if (!hiddenWord.contains(letter)) {
+            if (!hiddenWord.contains(String.valueOf(letter))) {
                 ConsoleWriter.drawGallows(tries);
                 tries++;
             }
-            usedLetters.add(letter.charAt(0));
 
-
+            usedLetters.add(letter);
             ConsoleWriter.showFoundedWord(foundedWord);
             ConsoleWriter.showUsedLetters(usedLetters);
             ConsoleWriter.availableTries(tries, MAX_TRIES);
@@ -53,26 +58,27 @@ public class GameLoop {
 
 
     private static String generateFoundedLettersInWord(String word, List<Integer> foundedIndexes) {
-        String foundedWord = "\n";
+        StringBuilder foundedWord = new StringBuilder();
         for (int i = 0; i < word.length(); i++) {
             if (foundedIndexes.contains(i)) {
-                foundedWord += word.charAt(i);
+                foundedWord.append(word.charAt(i));
             } else {
-                foundedWord += "*";
+                foundedWord.append("*");
             }
         }
-        return foundedWord;
+        return foundedWord.toString();
     }
 
-    private static void addFoundedIndexes(String hiddenWord, String letter, List<Integer> foundedIndexes) {
+    private static void addFoundedIndexes(String hiddenWord, char letter, List<Integer> foundedIndexes) {
         for (int i = 0; i < hiddenWord.length(); i++) {
-            if (String.valueOf(hiddenWord.charAt(i)).equals(letter)) {
+            if (hiddenWord.charAt(i)== letter) {
                 foundedIndexes.add(i);
             }
         }
     }
 
-    public static boolean isValidLetter(String letter) {
-        return letter.length() == 1 && RUSSIAN_ALPHABET_PATTERN.matcher(letter).matches();
+
+    public static boolean isValidLetter(char letter) {
+        return RUSSIAN_ALPHABET_PATTERN.matcher(String.valueOf(letter)).matches();
     }
 }

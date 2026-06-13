@@ -5,7 +5,7 @@ public class Main {
     private static final String ANSWER_TO_START_GAME = "y";
 
     public static void main() {
-        boolean again = false;
+        boolean again;
         String firstInput;
         ConsoleWriter.newGameQuestion();
 

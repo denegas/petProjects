@@ -25,8 +25,8 @@ public final class ConsoleWriter {
         System.out.println("Введите 1 букву из кириллицы!");
     }
 
-    public static void alreadyUsedThisLetter(String letter) {
-        System.out.println("вы уже использовали букву: " + letter.toUpperCase());
+    public static void alreadyUsedThisLetter(char letter) {
+        System.out.println("вы уже использовали букву: " + String.valueOf(letter).toUpperCase());
     }
 
     public static void successfulGuess(String word) {
@@ -42,7 +42,7 @@ public final class ConsoleWriter {
     }
 
     public static void showFoundedWord(String foundedWord) {
-        System.out.println(foundedWord.toUpperCase());
+        System.out.println("\n"+foundedWord.toUpperCase());
     }
 
     public static void newGameQuestion() {
