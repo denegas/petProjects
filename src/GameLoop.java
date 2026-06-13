@@ -19,17 +19,15 @@ public class GameLoop {
         ConsoleWriter.hiddenWordLength(hiddenWord);
         do {
             ConsoleWriter.writeLetter();
+            String input = scanner.nextLine().toLowerCase();
 
-            try {
-                letter = scanner.nextLine().toLowerCase().charAt(0);
-            } catch (RuntimeException e){
+            if (!isValidInput(input)) {
                 ConsoleWriter.errorAlphabet();
                 continue;
             }
-            if (!isValidLetter(letter)) {
-                ConsoleWriter.errorAlphabet();
-                continue;
-            } else if (usedLetters.contains(letter)) {
+
+            letter = input.trim().charAt(0);
+            if (usedLetters.contains(letter)) {
                 ConsoleWriter.alreadyUsedThisLetter(letter);
                 continue;
             }
@@ -71,14 +69,14 @@ public class GameLoop {
 
     private static void addFoundedIndexes(String hiddenWord, char letter, List<Integer> foundedIndexes) {
         for (int i = 0; i < hiddenWord.length(); i++) {
-            if (hiddenWord.charAt(i)== letter) {
+            if (hiddenWord.charAt(i) == letter) {
                 foundedIndexes.add(i);
             }
         }
     }
 
 
-    public static boolean isValidLetter(char letter) {
-        return RUSSIAN_ALPHABET_PATTERN.matcher(String.valueOf(letter)).matches();
+    public static boolean isValidInput(String input) {
+        return input.trim().length() == 1 && RUSSIAN_ALPHABET_PATTERN.matcher(input.trim()).matches();
     }
 }
