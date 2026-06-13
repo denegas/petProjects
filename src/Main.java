@@ -1,31 +1,30 @@
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 import java.util.Scanner;
 
-public class Main{
+public class Main {
+    private static final String ANSWER_TO_START_GAME = "y";
+
     public static void main() {
-        boolean again = false;
-        Scanner scanner = new Scanner(System.in);
+        boolean again;
+        String firstInput;
+        ConsoleWriter.newGameQuestion();
 
-        do {
-            GameLoop.start(scanner);
-            System.out.println("Сыграть снова? (Y/N)");
+        try (Scanner scanner = new Scanner(System.in)) {
+            firstInput = scanner.nextLine();
 
-            try {
-                String input = scanner.nextLine();
-                System.out.println(input);
-                again = input.equalsIgnoreCase("y");
+            if (firstInput.equalsIgnoreCase(ANSWER_TO_START_GAME)) {
+                do {
+                    GameLoop.start(scanner);
+                    ConsoleWriter.playAgainQuestion();
+                    String input = scanner.nextLine();
+                    again = input.equalsIgnoreCase(ANSWER_TO_START_GAME);
 
-            } catch (NoSuchElementException err) {
-                System.out.println("err with: " + err.getMessage());
+                } while (again);
             }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to read user answer: ", e);
+        }
+        ConsoleWriter.gameOverMessage();
 
-        } while (again);
-
-        System.out.println("Конец игры");
-        scanner.close();
     }
 }
